@@ -127,16 +127,19 @@ we create volumes and volume mounts to mount the container logs from the host in
 is because the falco pods write their output to STDOUT. The collector pod needs to be able to read this from the host.
 
 We will also configure an OTLP exporter to ship these logs to HoneyComb. We will need to set the HoneyComb API key as a
-secret in the cluster (see below). We can then reference this in the OTLP exporter configuration. We also set the dataset
+secret in the cluster. We can then reference this in the OTLP exporter configuration. We also set the dataset
 as a header.
-
-```shell
-kubectl create secret generic otel-honeycomb-apikey -n falco --from-literal apikey="asjdfhkalsjhfkalsjdfh"
-```
 
 Lastly we are using the [container-parser](https://opentelemetry.io/blog/2024/otel-collector-container-log-parser/) 
 operator to parse the logs from the falco pods. We also json_parse the body into a new attribute called falco. This 
 allows us to query the logs in honeycomb using the falco attribute.
+
+We need to apply the CRD to the cluster:
+
+```shell
+```shell
+kubectl apply -f otel-honeycomb-apikey
+```
 
 We can then use the honeycomb UI to query the logs or explore the data and see the events that have been triggered by falco.
 
