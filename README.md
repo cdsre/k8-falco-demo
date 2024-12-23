@@ -137,8 +137,7 @@ allows us to query the logs in honeycomb using the falco attribute.
 We need to apply the CRD to the cluster:
 
 ```shell
-```shell
-kubectl apply -f otel-honeycomb-apikey
+kubectl apply -f otel-collector.yaml
 ```
 
 We can then use the honeycomb UI to query the logs or explore the data and see the events that have been triggered by falco.
